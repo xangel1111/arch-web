@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: url(oneshotwp.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .navbar {
+      height: 30px;
+      background-color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 0.5rem;
+    }
+
+    .workspaces a {
+      color: #ccc;
+      padding-block: 0.15rem;
+      padding-inline: 0.25rem;
+      border: 1px solid #555;
+      text-decoration: none;
+    }
+
+    .navbar .status_bar {
+      color: #ccc;
+      display: flex;
+    }
+    .status_bar p {
+      border-right: 1px solid white;
+      padding-inline: 0.5rem;
+    }
+    .main {
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .main .terminal {
+      visibility: visible;
+      color: #ddd;
+      border-radius: 1.5rem;
+      background-color: #0006;
+      height: 80vh;
+      width: 90vw;
+      font-size: 1.3rem;
+      padding: 3rem;
+    }
+    .terminal input {
+      font-size: inherit;
+      padding-left: 0.5rem;
+      padding-right: 50rem;
+      color: inherit;
+      border: none;
+      background-color: transparent;
+    }
+    .terminal input:focus {
+      outline: none;
+    }
+    .terminal .terminal_line {
+      visibility: hidden;
+      color: #6998ba;
+      margin-right: 14px;
+    }
+  </style>
+  <header class="navbar">
+    <nav class="workspaces">
+      <a href="index.html">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+    </nav>
+    <div class="status_bar">
+      <p>4,5 GiB</p>
+      <p>2025-04-05</p>
+      <p>12:09:15</p>
+    </div>
+  </header>
+  <main class="main">
+    <div class="terminal">
+      <div class="terminal_prompt">
+        <label>[magia@arch ~]$</label>
+        <input type="text" id="prompt">
+      </div>
+      <div class="terminal_line">
+        <p>Documents Downloads Pictures Projects arch-config</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    const terminal = document.getElementsByClassName("terminal")[0];
+
+    const terminal_line = document.getElementsByClassName("terminal_line")[0];
+
+    const prompt = document.getElementById("prompt");
+
+    let keysPressed = {};
+    document.addEventListener('keydown', function(event) {
+      keysPressed[event.key] = true;
+      console.log(keysPressed)
+      if (keysPressed['Alt'] && keysPressed['Enter']) {
+        terminal.style.visibility = "visible";
+        prompt.focus();
+      }
+
+      if (keysPressed['Alt'] && keysPressed['Shift'] && keysPressed['Q']) {
+        terminal.style.visibility = "hidden"; 
+      }
+
+      if (keysPressed['Enter']) {
+        if (prompt.value == "ls") {
+          terminal_line.style.visibility = "visible";
+          prompt.value = "";
+        }
+        if (prompt.value == "clear") {
+          terminal_line.style.visibility = "hidden";
+          prompt.value = "";
+        }
+      }
+    }); 
+    document.addEventListener('keyup', (event) => {
+      keysPressed[event.key] = false;
+      console.log(keysPressed);
+    });
+
+
+  </script>
+</body>
+</html>
